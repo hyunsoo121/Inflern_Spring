@@ -1,8 +1,11 @@
 package hello.core.member;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class MemoryMemberRepository implements MemberRepository{
 
     //여러곳에서 동시에 접근을 하면 문제가 생겨 concurrent해시맵을 쓰는게 맞음
