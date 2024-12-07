@@ -3,7 +3,7 @@ package com.example.practice_api.domain.user;
 import lombok.Data;
 
 @Data
-public class userDTO {
+public class UserDTO {
     private String accountId;
     private int profileIconId;
     private long revisionDate;

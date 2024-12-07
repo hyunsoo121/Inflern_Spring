@@ -1,7 +1,8 @@
 package com.example.practice_api.web.home;
 
-import com.example.practice_api.domain.user.userDTO;
-import com.example.practice_api.domain.user.userService;
+import com.example.practice_api.domain.user.UserDTO;
+import com.example.practice_api.domain.user.UserService;
+import com.example.practice_api.domain.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/")
 @RequiredArgsConstructor
+@RequestMapping("/")
 public class homeController {
+
+    private final UserService userService = new UserServiceImpl();
 
     @GetMapping("")
     public String home(){
@@ -21,11 +24,11 @@ public class homeController {
 
     @PostMapping(value = "/summonerByName")
     @ResponseBody
-    public userDTO callSummonerByName(String summonerName){
+    public UserDTO callSummonerByName(String summonerName){
 
         summonerName = summonerName.replaceAll(" ","%20");
 
-        userDTO apiResult = userService.callRiotAPISummonerByName(summonerName);
+        UserDTO apiResult = userService.callRiotAPISummonerByName(summonerName);
 
         return apiResult;
     }

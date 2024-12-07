@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: practice_api
+  riot:
+    key: RGAPI-8466ab32-6ff7-4c46-8a28-109ae8b485d5
+

@@ -1,8 +1,9 @@
 package com.example.practice_api.domain.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Value;
-import org.springframework.http.HttpEntity;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,14 +13,19 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @Service
-public class userService {
-        private static final ObjectMapper objectMapper = new ObjectMapper();
+@Slf4j
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+        private final ObjectMapper objectMapper = new ObjectMapper();
 
-        private static String mykey = "riot api key";
+        @Value("${spring.riot.key}")
+        private String mykey;
 
-        public static userDTO callRiotAPISummonerByName(String summonerName) {
+
+        @Override
+        public UserDTO callRiotAPISummonerByName(String summonerName) {
             String serverUrl = "https://kr.api.riotgames.com";
-            userDTO result = null;
+            UserDTO result = null;
 
             try {
                 HttpClient client = HttpClient.newHttpClient();
@@ -29,9 +35,10 @@ public class userService {
                         .build();
 
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+                System.out.println(response.statusCode());
                 if (response.statusCode() == 200) {
-                    result = objectMapper.readValue(response.body(), userDTO.class);
+                    result = objectMapper.readValue(response.body(), UserDTO.class);
+
                 }
 
             } catch (IOException | InterruptedException e) {
